@@ -45,12 +45,12 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           docker run --rm --privileged \
-            -v $PWD:/go/src/github.com/hazcod/enpasscli \
+            -v $PWD:/go/src/github.com/Kwbmm/enpasscli \
             -v /var/run/docker.sock:/var/run/docker.sock \
-            -w /go/src/github.com/hazcod/enpasscli \
+            -w /go/src/github.com/Kwbmm/enpasscli \
             -e GITHUB_TOKEN \
             -e DOCKER_USERNAME \
             -e DOCKER_PASSWORD \
             -e DOCKER_REGISTRY \
             goreleaser/goreleaser release \
-              --config=/go/src/github.com/hazcod/enpasscli/.github/goreleaser.yml
+              --config=/go/src/github.com/Kwbmm/enpasscli/.github/goreleaser.yml

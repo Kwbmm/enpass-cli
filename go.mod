@@ -1,4 +1,4 @@
-module github.com/hazcod/enpass-cli
+module github.com/Kwbmm/enpass-cli
 
 go 1.15
 
