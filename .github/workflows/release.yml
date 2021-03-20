@@ -10,6 +10,10 @@ jobs:
     name: Release
     runs-on: ubuntu-latest
     steps:
+      - name: Install goreleaser
+        run: |
+          curl -L https://github.com/goreleaser/goreleaser/releases/download/v0.159.0/goreleaser_amd64.deb -o goreleaser.deb
+          sudo dpkg -i goreleaser.deb
       -
         name: Checkout
         uses: actions/checkout@v2
@@ -40,21 +44,12 @@ jobs:
           git tag -fa ${TAG} -m "release v${{ steps.semantic.outputs.version }}"
           git push origin ${TAG}
       -
-        id: vars
+        name: GCC multilib
         run: |
-          echo ::set-output name=go_version::$(grep '^FROM go' .github/go/Dockerfile | cut -d ' ' -f 2 | cut -d ':' -f 2)
-          echo "Using Go version ${{ steps.vars.outputs.go_version }}"
-      -
-        name: Setup go
-        uses: actions/setup-go@v2
-        with:
-          go-version: ${{ steps.vars.outputs.go_version }}
-      -
-        run: sudo apt-get install gcc-multilib g++-multilib
+          sudo apt-get install gcc-multilib g++-multilib
       -
         name: Release
-        uses: goreleaser/goreleaser-action@v2.4.1
-        with:
-          args: release --config=.github/goreleaser.yml
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+            goreleaser release --config=.github/goreleaser.yml
