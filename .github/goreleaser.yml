@@ -21,7 +21,7 @@ builds:
   - -ldflags "-linkmode external -extldflags -static" -X main.version={{.Version}}
   main: ./cmd/enpasscli/main.go
   goos:
-  - darwin
+#  - darwin
   - linux
 #  - freebsd
   ignore:
