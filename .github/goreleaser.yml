@@ -17,13 +17,15 @@ builds:
   id: enpasscli
   binary: enpasscli
   env:
-  - -ldflags "-linkmode external -extldflags -static" -X main.version={{.Version}}
+  - CGO_ENABLED=1
+  - -X main.version={{.Version}}
   main: ./cmd/enpasscli/main.go
   goos:
   - darwin
   - linux
-  - windows
-  - freebsd
+#  - freebsd
+  ignore:
+  - goarch: arm64
 
 checksum:
   name_template: 'checksums.txt'
